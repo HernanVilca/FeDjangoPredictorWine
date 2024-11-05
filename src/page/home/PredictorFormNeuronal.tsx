@@ -10,19 +10,63 @@ import HeaderLabelComponent from "../../common/commonHeader/HeaderLabelComponent
 import { getBorderColorFormik } from "../../utils/utils";
 
 export const PredictorFormNeuronal = () => {
+  // const [formData, setFormData] = useState({
+  //   fixed_acidity: "",
+  //   volatile_acidity: "",
+  //   citric_acid: "",
+  //   residual_sugar: "",
+  //   chlorides: "",
+  //   free_sulfur_dioxide: "",
+  //   total_sulfur_dioxide: "",
+  //   density: "",
+  //   pH: "",
+  //   sulphates: "",
+  //   alcohol: "",
+  // });
+
+  //   const [initialValues, setInitialValues] = useState({
+  //     fixed_acidity: "7.4",
+  //     volatile_acidity: "0.70",
+  //     citric_acid: "0.00",
+  //     residual_sugar: "1.9",
+  //     chlorides: "0.076",
+  //     free_sulfur_dioxide: "11.0",
+  //     total_sulfur_dioxide: "34.0",
+  //     density: "0.9978",
+  //     pH: "3.51",
+  //     sulphates: "0.56",
+  //     alcohol: "9.4",
+  //   });
+
+  // Valores predeterminados del Caso 6
+  //   const [initialValues, setInitialValues] = useState({
+  //     fixed_acidity: "6.0",
+  //     volatile_acidity: "0.31",
+  //     citric_acid: "0.47",
+  //     residual_sugar: "3.6",
+  //     chlorides: "0.039",
+  //     free_sulfur_dioxide: "50.0",
+  //     total_sulfur_dioxide: "150.0",
+  //     density: "0.9912",
+  //     pH: "3.12",
+  //     sulphates: "0.35",
+  //     alcohol: "13.1",
+  //   });
+
   const [initialValues, setInitialValues] = useState({
-    fixed_acidity: "7.4",
-    volatile_acidity: "0.70",
-    citric_acid: "0.00",
-    residual_sugar: "1.9",
-    chlorides: "0.076",
-    free_sulfur_dioxide: "11.0",
-    total_sulfur_dioxide: "34.0",
+    fixed_acidity: "10.5",
+    volatile_acidity: "0.24",
+    citric_acid: "0.47",
+    residual_sugar: "2.1",
+    chlorides: "0.066",
+    free_sulfur_dioxide: "6.0",
+    total_sulfur_dioxide: "24.0",
     density: "0.9978",
-    pH: "3.51",
-    sulphates: "0.56",
-    alcohol: "9.4",
+    pH: "3.15",
+    sulphates: "0.9",
+    alcohol: "11.0",
   });
+
   const [prediction, setPrediction] = useState(null);
   const [error, setError] = useState("");
 
