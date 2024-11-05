@@ -1,4 +1,5 @@
 import React, { FC, useState } from "react";
+import { PredictorFormNeuronal } from "./PredictorFormNeuronal";
 
 export const Home = () => {
   // const [formData, setFormData] = useState({
@@ -112,8 +113,12 @@ export const Home = () => {
       });
 
       const response = await fetch(
-        `http://localhost:8000/api/predict/predictor/?${queryParams.toString()}`
+        `http://localhost:8000/api/predictredneuronalpppp/predictorredneuronalxx/?${queryParams.toString()}`
       );
+
+      // const response = await fetch(
+      //   `http://localhost:8000/api/predict/predictor/?${queryParams.toString()}`
+      // );
 
       const jsonData = await response.json();
       setPrediction(jsonData.quality);
@@ -129,6 +134,7 @@ export const Home = () => {
 
   return (
     <div>
+      <PredictorFormNeuronal />
       <div>
         <h1>Predicción de Calidad del Vino</h1>
         <form onSubmit={handleSubmit}>
