@@ -1,0 +1,65 @@
+export const theme = {
+  colors: {
+    accentGreen: "#88B13B",
+    accentRed: "#FF6F61",
+    blue: "#3B4AD3",
+    gray: "#989CA2",
+    gray72: "#C6C8CE",
+    primaryBlue: "#002E6C",
+    red: "#F71F20",
+    secondaryLightBlue: "#00AEEF",
+
+    green50: "#EFFEF5",
+    green100: "#DAFEE8",
+    green200: "#B7FBD3",
+    green300: "#7FF6B1",
+    green400: "#40E887",
+    green500: "#17D066",
+    green600: "#0CA74E",
+    green700: "#0E8742",
+    green800: "#116A38",
+    green900: "#105730",
+    green950: "#023119",
+
+    gray50: "#F7F8F8",
+    gray100: "#EEEEF0",
+    gray200: "#D9DADE",
+    gray300: "#B7BAC2",
+    gray400: "#9095A0",
+    gray500: "#727785",
+    gray600: "#5C606D",
+    gray700: "#4B4E59",
+    gray800: "#40434C",
+    gray900: "#393B41",
+    gray950: "#212226",
+    white: "#FFFFFF",
+
+    primarySurface: "#0CA74E",
+    primaryElevated: "#E7F7EE",
+    primaryAccent: "#17D066",
+    primaryActive: "#0E8742",
+
+    primaryTextDisabled: "#B7FBD3",
+
+    secondarySurface: "#E5E7E8",
+    secondaryElevated: "#F5F6F6",
+    secondaryNegative: "#2C2F32",
+
+    secondaryBorderElevated: "#CDD1D4",
+    secondaryTextBody: "#808B90",
+    secondaryTextCaption: "#AAB2B6",
+    primaryLabel: "#000",
+  },
+
+  transparencies: {
+    p10: "1A",
+    p20: "33",
+    p30: "4D",
+    p58: "94",
+  },
+  fontFamilies: {
+    primaryFont: "Satoshi,'Poppins', sans-serif",
+    primaryFontMedium: "SatoshiMedium,'Poppins', sans-serif",
+    primaryFontBold: "SatoshiBold,'Poppins', sans-serif",
+  },
+};
