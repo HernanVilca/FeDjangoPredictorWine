@@ -3,13 +3,27 @@ import { Box, Grid } from "@mui/material";
 import { Formik, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
+import { ajax } from "rxjs/ajax";
+import { catchError, map } from "rxjs/operators";
+import { of } from "rxjs";
+
 import InputTextFieldCommon from "../../common/InputTextFieldCommon";
 import ButtomSearchFilter from "../../common/Bottom/ButtomSearchFilter";
 import { DecimalRegex } from "../../utils/Constant";
 import HeaderLabelComponent from "../../common/commonHeader/HeaderLabelComponent";
 import { getBorderColorFormik } from "../../utils/utils";
 
+type ExecutionStatus =
+  | "RETRYING"
+  | "WAITING"
+  | "PROCESSING"
+  | "SUCCESS"
+  | "FAILED"
+  | "CANCELLED"
+  | "";
 export const PredictorFormNeuronal = () => {
+  const [statusAsync, setStatusAsync] = useState<ExecutionStatus>("");
+
   // const [formData, setFormData] = useState({
   //   fixed_acidity: "",
   //   volatile_acidity: "",
@@ -39,33 +53,33 @@ export const PredictorFormNeuronal = () => {
   // });
 
   // Valores predeterminados del Caso 6
-  // const [initialValues, setInitialValues] = useState({
-  //   fixed_acidity: "6.0",
-  //   volatile_acidity: "0.31",
-  //   citric_acid: "0.47",
-  //   residual_sugar: "3.6",
-  //   chlorides: "0.039",
-  //   free_sulfur_dioxide: "50.0",
-  //   total_sulfur_dioxide: "150.0",
-  //   density: "0.9912",
-  //   pH: "3.12",
-  //   sulphates: "0.35",
-  //   alcohol: "13.1",
-  // });
-
   const [initialValues, setInitialValues] = useState({
-    fixed_acidity: "10.5",
-    volatile_acidity: "0.24",
+    fixed_acidity: "6.0",
+    volatile_acidity: "0.31",
     citric_acid: "0.47",
-    residual_sugar: "2.1",
-    chlorides: "0.066",
-    free_sulfur_dioxide: "6.0",
-    total_sulfur_dioxide: "24.0",
-    density: "0.9978",
-    pH: "3.15",
-    sulphates: "0.9",
-    alcohol: "11.0",
+    residual_sugar: "3.6",
+    chlorides: "0.039",
+    free_sulfur_dioxide: "50.0",
+    total_sulfur_dioxide: "150.0",
+    density: "0.9912",
+    pH: "3.12",
+    sulphates: "0.35",
+    alcohol: "13.1",
   });
+
+  // const [initialValues, setInitialValues] = useState({
+  //   fixed_acidity: "10.5",
+  //   volatile_acidity: "0.24",
+  //   citric_acid: "0.47",
+  //   residual_sugar: "2.1",
+  //   chlorides: "0.066",
+  //   free_sulfur_dioxide: "6.0",
+  //   total_sulfur_dioxide: "24.0",
+  //   density: "0.9978",
+  //   pH: "3.15",
+  //   sulphates: "0.9",
+  //   alcohol: "11.0",
+  // });
 
   const [prediction, setPrediction] = useState(null);
   const [error, setError] = useState("");
@@ -84,6 +98,35 @@ export const PredictorFormNeuronal = () => {
     alcohol: Yup.string().required("El campo es obligatorio"),
   });
 
+  const fetchPrediction = (values) => {
+    setStatusAsync("PROCESSING");
+    const queryParams = new URLSearchParams({
+      fixed_acidity: values.fixed_acidity,
+      volatile_acidity: values.volatile_acidity,
+      citric_acid: values.citric_acid,
+      residual_sugar: values.residual_sugar,
+      chlorides: values.chlorides,
+      free_sulfur_dioxide: values.free_sulfur_dioxide,
+      total_sulfur_dioxide: values.total_sulfur_dioxide,
+      density: values.density,
+      pH: values.pH,
+      sulphates: values.sulphates,
+      alcohol: values.alcohol,
+    });
+
+    const url = `http://localhost:8000/api/predictredneuronalppppv3/predictorredneuronalxxv3/?${queryParams.toString()}`;
+
+    return ajax.getJSON(url).pipe(
+      map((response: any) => response.quality),
+      catchError((error) => {
+        setStatusAsync("FAILED");
+        setError(`${error.response.error}`);
+
+        return of(null);
+      })
+    );
+  };
+
   return (
     <div>
       <h1>Predicción de Calidad del Vino</h1>
@@ -94,38 +137,24 @@ export const PredictorFormNeuronal = () => {
         onSubmit={async (values) => {
           setInitialValues({ ...values });
 
-          try {
-            const queryParams = new URLSearchParams({
-              fixed_acidity: values.fixed_acidity,
-              volatile_acidity: values.volatile_acidity,
-              citric_acid: values.citric_acid,
-              residual_sugar: values.residual_sugar,
-              chlorides: values.chlorides,
-              free_sulfur_dioxide: values.free_sulfur_dioxide,
-              total_sulfur_dioxide: values.total_sulfur_dioxide,
-              density: values.density,
-              pH: values.pH,
-              sulphates: values.sulphates,
-              alcohol: values.alcohol,
-            });
+          const subscription = fetchPrediction(values).subscribe({
+            next: (quality) => {
+              if (quality !== null) {
+                setStatusAsync("SUCCESS");
+                setPrediction(quality);
+                setError("");
+              }
+            },
+            error: (err) => {
+              setStatusAsync("FAILED");
+              setError(
+                "Error al obtener la predicción. Verifica que todos los campos estén llenos y que el backend esté funcionando."
+              );
+            },
+            complete: () => {},
+          });
 
-            // const response = await fetch(
-            //   `http://localhost:8000/api/predictredneuronalpppp/predictorredneuronalxx/?${queryParams.toString()}`
-            // );
-            const response = await fetch(
-              `http://localhost:8000/api/predictredneuronalppppv3/predictorredneuronalxxv3/?${queryParams.toString()}`
-            );
-
-            const jsonData = await response.json();
-            setPrediction(jsonData.quality);
-
-            setError("");
-          } catch (error) {
-            console.error("Error al obtener la predicción:", error);
-            setError(
-              "Error al obtener la predicción. Verifica que todos los campos estén llenos y que el backend esté funcionando."
-            );
-          }
+          return () => subscription.unsubscribe();
         }}
         enableReinitialize={true}
       >
@@ -535,10 +564,21 @@ export const PredictorFormNeuronal = () => {
         }}
       </Formik>
 
-      {prediction && (
-        <h2>Predicción de la calidad del vino es : {prediction}</h2>
+      {statusAsync === "SUCCESS" && (
+        <>
+          {prediction && (
+            <h2>Predicción de la calidad del vino es : {prediction}</h2>
+          )}
+        </>
       )}
-      {error && <p>{error}</p>}
+      {statusAsync === "PROCESSING" && <div>Procesando</div>}
+      {statusAsync === "FAILED" && (
+        <>
+          {error && (
+            <div style={{ fontSize: "2rem", fontWeight: 700 }}>{error}</div>
+          )}
+        </>
+      )}
     </div>
   );
 };
