@@ -24,34 +24,34 @@ export const PredictorFormNeuronal = () => {
   //   alcohol: "",
   // });
 
-  //   const [initialValues, setInitialValues] = useState({
-  //     fixed_acidity: "7.4",
-  //     volatile_acidity: "0.70",
-  //     citric_acid: "0.00",
-  //     residual_sugar: "1.9",
-  //     chlorides: "0.076",
-  //     free_sulfur_dioxide: "11.0",
-  //     total_sulfur_dioxide: "34.0",
-  //     density: "0.9978",
-  //     pH: "3.51",
-  //     sulphates: "0.56",
-  //     alcohol: "9.4",
-  //   });
+  // const [initialValues, setInitialValues] = useState({
+  //   fixed_acidity: "7.4",
+  //   volatile_acidity: "0.70",
+  //   citric_acid: "0.00",
+  //   residual_sugar: "1.9",
+  //   chlorides: "0.076",
+  //   free_sulfur_dioxide: "11.0",
+  //   total_sulfur_dioxide: "34.0",
+  //   density: "0.9978",
+  //   pH: "3.51",
+  //   sulphates: "0.56",
+  //   alcohol: "9.4",
+  // });
 
   // Valores predeterminados del Caso 6
-  //   const [initialValues, setInitialValues] = useState({
-  //     fixed_acidity: "6.0",
-  //     volatile_acidity: "0.31",
-  //     citric_acid: "0.47",
-  //     residual_sugar: "3.6",
-  //     chlorides: "0.039",
-  //     free_sulfur_dioxide: "50.0",
-  //     total_sulfur_dioxide: "150.0",
-  //     density: "0.9912",
-  //     pH: "3.12",
-  //     sulphates: "0.35",
-  //     alcohol: "13.1",
-  //   });
+  // const [initialValues, setInitialValues] = useState({
+  //   fixed_acidity: "6.0",
+  //   volatile_acidity: "0.31",
+  //   citric_acid: "0.47",
+  //   residual_sugar: "3.6",
+  //   chlorides: "0.039",
+  //   free_sulfur_dioxide: "50.0",
+  //   total_sulfur_dioxide: "150.0",
+  //   density: "0.9912",
+  //   pH: "3.12",
+  //   sulphates: "0.35",
+  //   alcohol: "13.1",
+  // });
 
   const [initialValues, setInitialValues] = useState({
     fixed_acidity: "10.5",
@@ -109,8 +109,11 @@ export const PredictorFormNeuronal = () => {
               alcohol: values.alcohol,
             });
 
+            // const response = await fetch(
+            //   `http://localhost:8000/api/predictredneuronalpppp/predictorredneuronalxx/?${queryParams.toString()}`
+            // );
             const response = await fetch(
-              `http://localhost:8000/api/predictredneuronalpppp/predictorredneuronalxx/?${queryParams.toString()}`
+              `http://localhost:8000/api/predictredneuronalppppv3/predictorredneuronalxxv3/?${queryParams.toString()}`
             );
 
             const jsonData = await response.json();
