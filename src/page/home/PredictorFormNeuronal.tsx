@@ -120,7 +120,6 @@ export const PredictorFormNeuronal = () => {
       map((response: any) => response.quality),
       catchError((error) => {
         setStatusAsync("FAILED");
-        console.error("Error al obtener la predicción:", error);
         setError(`${error.response.error}`);
 
         return of(null);
@@ -148,7 +147,6 @@ export const PredictorFormNeuronal = () => {
             },
             error: (err) => {
               setStatusAsync("FAILED");
-              console.error("Error en la suscripción:", err);
               setError(
                 "Error al obtener la predicción. Verifica que todos los campos estén llenos y que el backend esté funcionando."
               );
