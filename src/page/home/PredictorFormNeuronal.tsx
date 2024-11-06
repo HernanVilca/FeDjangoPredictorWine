@@ -142,13 +142,11 @@ export const PredictorFormNeuronal = () => {
             next: (quality) => {
               if (quality !== null) {
                 setStatusAsync("SUCCESS");
-                console.log("Predicción:", quality);
                 setPrediction(quality);
                 setError("");
               }
             },
             error: (err) => {
-              console.log("saspppppppppppppppp");
               setStatusAsync("FAILED");
               console.error("Error en la suscripción:", err);
               setError(
